@@ -29,12 +29,11 @@ if resp.status_code in [200, 201]:
     Temperature range: High: {weather_data["main"]["temp_max"]} Low: {weather_data["main"]["temp_min"]}
     Humidity: {weather_data["main"]["humidity"]}
     """)
-    #print("The weather in {} is {}.".format(weather_data['name'], weather_data['weather'][0]['description']))
 else:
     print("ERROR: " + str(resp.status_code))
 
 #Show 5 day forecast for vacation spot - Berlin
-"""
+
 berlin_id = "6545310"
 berlin_url_forecast = f"http://api.openweathermap.org/data/2.5/forecast?id={berlin_id}&APPID={api_key}"
 resp = requests.get(berlin_url_forecast)
@@ -45,7 +44,11 @@ if resp.status_code in [200, 201]:
     for item in weather_data["list"]:
         dt_obj = datetime.strptime(item["dt_txt"], "%Y-%m-%d %H:%M:%S")
         if dt_obj.hour == 12:
-            print("On " + str(dt_obj.month) + " " + str(dt_obj.day) + " it will be " + item["weather"][0]["description"])
+            print(f"""
+            On {str(dt_obj.month)}, {str(dt_obj.day)} it will be {item["weather"][0]["description"]}
+            Temperature (in Kelvin): {item["main"]["temp"]}
+            Temp range: High: {item["main"]["temp_max"]} Low: {item["main"]["temp_min"]}
+            Humidity: {item["main"]["humidity"]}
+            """)
 else:
     print("ERROR: " + str(resp.status_code))
-"""
