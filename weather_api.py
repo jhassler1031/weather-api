@@ -1,5 +1,6 @@
 
 import requests
+from datetime import datetime
 
 #Default - shows for Moscow
 
@@ -36,8 +37,9 @@ if resp.status_code in [200, 201]:
     weather_data = resp.json()
     print("The 5 day forecast for " + weather_data["city"]["name"] +  " is: ")
     for item in weather_data["list"]:
-        print(item)
-        print("On " + item["dt_txt"] + ": it will be " + item["weather"][0]["description"])
+        dt_obj = datetime.strptime(item["dt_txt"], "%Y-%m-%d %H:%M:%S")
+        if dt_obj.hour == 12:
+            print("On " + str(dt_obj.month) + " " + str(dt_obj.day) + " it will be " + item["weather"][0]["description"])
     #print("The weather in {} is {}.".format(weather_data['city']['name'], weather_data['weather'][0]['description']))
 else:
     print("ERROR: " + str(resp.status_code))
